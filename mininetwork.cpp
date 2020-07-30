@@ -63,7 +63,7 @@ class Sololearn{
       cout<<endl<<endl;
       
       //users more closed to you will be displayed first
-      cout<<"Friends of your friends and so on... :"<<endl;                                      
+      cout<<"You are a part of this network :"<<endl;                                      
       while(!q.empty()){
         string node = q.front();
         cout<<node<<"\n";
