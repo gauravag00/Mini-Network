@@ -26,27 +26,44 @@ class Sololearn{
       }                
     }                  
     
-    void findFriends(string src, list<string> skills = list<string>{}){
+ void findFriends(string src, list<string> skills = list<string>{}){
       //modified bfs
       //for finding friends of your friends as layer1
       //then their friends as layer2 and so on...
-      //close users names will be displayed first
-      cout<<"Friends of your friends and so on... :"<<endl;
       unordered_map<string, bool> visited; 
       visited[src] = true;
       queue<string> q;
-     
+      
+      //will help in finding mutual connections
+      unordered_map<string, bool> trackNeibr;
+      trackNeibr[src]=true;
+      
       for(string neighbour : 
-      adjList[src])
+      adjList[src]){
         visited[neighbour] = true;
-     
+        trackNeibr[neighbour] = true;
+      }
+      
+      unordered_map<string, int> count;
+       
       for(string neighbour : adjList[src])
         for(string nextNeibr : adjList[neighbour]){
           if(!visited[nextNeibr])
-            q.push(nextNeibr);
+            q.push(nextNeibr);            
           visited[nextNeibr] = true;
-        }
-                                                
+          if(!trackNeibr[nextNeibr])
+            count[nextNeibr]++;
+        }                      
+     
+     //looking for mutual connections
+      cout<<"Users having mutual connections with you :"<<endl;
+      for(auto it : count)
+        cout<<it.first<<" ("<<it.second<<" mutual connections)"<<endl;
+        
+      cout<<endl<<endl;
+      
+      //users more closed to you will be displayed first
+      cout<<"Friends of your friends and so on... :"<<endl;                                      
       while(!q.empty()){
         string node = q.front();
         cout<<node<<"\n";
@@ -59,15 +76,15 @@ class Sololearn{
         }      
       }
       
-      cout<<endl;
+      cout<<endl<<endl;            
             
       //looking for language similarity
       for(string skill : skills){
-        cout<<"users knowing "<<skill<<" :"<<endl;
+        cout<<"Users knowing "<<skill<<" :"<<endl;
         for(string user : users[skill])
           if(user!=src)
             cout<<user<<endl;
-        cout<<endl;
+        cout<<endl<<endl;
       }          
     }    
 }; 
@@ -81,8 +98,7 @@ int main(){
   //Gaurav's skills
   sl.addSkills("Gaurav Agrawal", list<string>{ "java","kotlin","c","cpp","dsa"});
   
-  sl.addFriends("Nilesh", list<string>{"Dev","Ihshu","Aakanksha","Heartless","blackwinter","chill pill","Rohit Kanojia",
-  "Prometheus","Namit Jain"});
+  sl.addFriends("Nilesh", list<string>{"Dev","Ihshu","Aakanksha","Heartless","blackwinter","ChillPill","Rohit Kanojia","Tanay","Prometheus","Namit Jain"});
   sl.addSkills("Nilesh", list<string>{"java","html","css","javascript","php","c#"});
   
   sl.addFriends("Rimjhim", list<string>{"Dev","Tanay","Nilesh"});
@@ -109,14 +125,14 @@ int main(){
   sl.addSkills("LukArToDo",list<string>{
   "web","java","kotlin"});
   
-  sl.addSkills("Dev", list<string>{"web","c"});
+  sl.addSkills("Dev", list<string>{"html","c","css","javascript"});
   
   sl.addSkills("Ayan", list<string>{"java","kotlin","android"});  
   
 
   string name, skillInput, skill="";
   list<string> skills;
-  cout<<"Enter you name: ";
+  cout<<"Enter your name: ";
   getline(cin, name);
   cout<<"Enter your skills separated by comma: ";
   getline(cin, skillInput);
@@ -135,6 +151,7 @@ int main(){
    
   return 0;
 }
+
 
 
 
