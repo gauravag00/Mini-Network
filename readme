@@ -19,3 +19,7 @@ I have tried to do something similiar by implementing a small network using grap
 datastructure along with queue, linkedlists and unordered_map(hash table).
 It will suggest users based on mutual connections, network of which you are a part,
 skills similarity. 
+
+I have created this code originally on sololearn, thanks to my friends and sololearners
+for helping in forming this network. 
+Thanks for reading : )
